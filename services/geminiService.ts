@@ -4,8 +4,8 @@ import { GoogleGenAI, Modality } from "@google/genai";
 const audioCache: Map<string, AudioBuffer> = new Map();
 
 export const generateLaughterAudio = async (
-  prompt: string, 
-  voiceName: string, 
+  prompt: string,
+  voiceName: string,
   audioContext: AudioContext
 ): Promise<AudioBuffer> => {
   const cacheKey = `${prompt}-${voiceName}`;
@@ -18,7 +18,6 @@ export const generateLaughterAudio = async (
   }
 
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  
   // We emphasize "Just laugh" in the system instruction
   const fullPrompt = `Rire uniquement. Ne parle pas. ${prompt}`;
 
@@ -37,7 +36,7 @@ export const generateLaughterAudio = async (
     });
 
     const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-    
+
     if (!base64Audio) {
       throw new Error("Aucun audio généré");
     }
@@ -54,7 +53,7 @@ export const generateLaughterAudio = async (
     // Note: decodeAudioData detaches the buffer, so we must clone if we want to cache, 
     // but audioContext.decodeAudioData returns a fresh buffer.
     const audioBuffer = await audioContext.decodeAudioData(bytes.buffer);
-    
+
     audioCache.set(cacheKey, audioBuffer);
     return audioBuffer;
 

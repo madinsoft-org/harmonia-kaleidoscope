@@ -9,7 +9,8 @@ on:
 jobs:
   build-and-deploy-dev:
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]'))
-    runs-on: [self-hosted, harmonia-runners]
+    runs-on: 
+      labels: self-hosted
 
     steps:
       - name: Checkout repository
@@ -37,6 +38,7 @@ jobs:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           # Le nom de la stack est "harmonia", cela créera le service "harmonia_harmonia"
           docker stack deploy -c docker/docker-compose.yml harmonia
