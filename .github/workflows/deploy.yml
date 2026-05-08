@@ -25,6 +25,7 @@ jobs:
           docker build \
             -f "docker/Dockerfile" \
             -t "harmonia:${{ steps.vars.outputs.sha_short }}" \
+            --build-arg GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
             .
 
       - name: Deploy stack
