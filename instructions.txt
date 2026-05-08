@@ -1,0 +1,24 @@
+créer une appli avec 4x4 vignette d'image de nature, de rires de relaxation. quand on clique sur un vignette cela déclenche un bande audio de 5m avec soit :
+* sons de la nature en 429.62htz
+* son d'activation des vitamines et oligo-éléments du cours (marc Henry YouTube)
+* des rires (bb, antillais, italiens, asiatique....)
+* musique de relaxation
+est ce que tu peux trouver des échantillons de sons sur internet sinon peux tu les générer. Quand le son se déclenche lancer une animation type kaléidoscope en plein écran. Mettre des commandes (lecture, pause, stop) Quand on appuye stop on revient à la page principale avec les vignettes
+
+____________________________________________________________________________________________________________________________________________________________________
+
+peux tu générer des sons plus réaliste pour le vent les vagues:
+tu peux extraire 5 min de la bande son de :
+https://www.youtube.com/watch?v=q1095iL7tQM
+https://www.youtube.com/watch?v=XFmImkwBYP4
+https://www.youtube.com/watch?v=8doIGnvdeUY
+
+____________________________________________________________________________________________________________________________________________________________________
+
+change les photos vitamin avec des images plus médicale ou d'aliments, les photos de rires mets rire et montre des gens en train de rire, relaxation des photos de boudha, lotus, bambous
+
+____________________________________________________________________________________________________________________________________________________________________
+
+lancer le kaléidoscope dès le départ on ne le voit que quand on fait pause et lecture
+____________________________________________________________________________________________________________________________________________________________________
+

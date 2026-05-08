@@ -1,0 +1,42 @@
+name: Build & Deploy harmonia dev
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-and-deploy-dev:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]'))
+    runs-on: [self-hosted, harmonia-runners]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Git SHA
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -f "docker/Dockerfile" \
+            -t "harmonia:${{ steps.vars.outputs.sha_short }}" \
+            .
+
+      - name: Deploy stack
+        env:
+          IMAGE_TAG: ${{ steps.vars.outputs.sha_short }}
+          DATABASE_URL: file:/data/dev.db
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+        run: |
+          # Le nom de la stack est "harmonia", cela créera le service "harmonia_harmonia"
+          docker stack deploy -c docker/docker-compose.yml harmonia
